@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Kayıt Ol</title>
+  <style>
+
+    * {
+  box-sizing: border-box;
+}
+    body {
+      font-family: Arial;
+      max-width: 400px;
+      margin: 50px auto;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+    }
+    button {
+      padding: 10px;
+      width: 100%;
+      background-color: #383ad4;
+      color: white;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <h2>Kayıt Ol</h2>
+
+  <form id="registerForm">
+    <input type="text" name="kullanici_adi" placeholder="Kullanıcı Adı" required />
+    <input type="password" name="sifre" placeholder="Şifre" required />
+    <input type="email" name="eposta" placeholder="E-Posta" required />
+    <input type="text" name="tam_adi" placeholder="Ad Soyad" required />
+    <input type="text" name="telefon" placeholder="Telefon" required />
+    <button type="submit">Kayıt Ol</button>
+  </form>
+
+  <p class="login-link">Hesabın var mı? <a href="giris.html">Giriş Yap</a></p>
+
+  <p id="sonuc"></p>
+
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const data = {
+        kullanici_adi: form.kullanici_adi.value,
+        sifre: form.sifre.value,
+        eposta: form.eposta.value,
+        tam_adi: form.tam_adi.value,
+        telefon: form.telefon.value
+      };
+
+      try {
+        const response = await fetch("/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        document.getElementById("sonuc").innerText = result.mesaj;
+      } catch (error) {
+        console.error("Kayit hatasi:", error);
+        document.getElementById("sonuc").innerText = "Bir hata oluştu.";
+      }
+    });
+  </script>
+</body>
+</html>

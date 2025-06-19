@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kullanıcı Bilgileri</title>
+</head>
+<body>
+  <h1>Kullanıcı Bilgileri</h1>
+  <button onclick="verileriGetir()">Verileri Yükle</button>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>kullanici_adi</th>
+        <th>sifre_hash</th>
+        <th>eposta</th>
+        <th>tam_adi</th>
+        <th>telefon</th>
+        <th>rol</th>
+      </tr>
+    </thead>
+    <tbody id="KullaniciTablosu"></tbody>
+  </table>
+
+  <script>
+    let veriYuklendi = false; // İkinci kez yüklenmesini engelle
+
+    function verileriGetir() {
+      if (veriYuklendi) return;
+
+      fetch('http://localhost:3000/kullanici')
+        .then(response => response.json())
+        .then(data => {
+          const tablo = document.getElementById('KullaniciTablosu');
+          tablo.innerHTML = ''; // tabloyu temizle
+
+          data.forEach(kullanici => {
+            const satir = `
+              <tr>
+                <td>${kullanici.id}</td>
+                <td>${kullanici.kullanici_adi}</td>
+                <td>${kullanici.sifre_hash}</td>
+                <td>${kullanici.eposta}</td>
+                <td>${kullanici.tam_adi}</td>
+                <td>${kullanici.telefon}</td>
+                <td>${kullanici.rol}</td>
+              </tr>`;
+            tablo.innerHTML += satir;
+          });
+
+          veriYuklendi = true; // tekrar yüklenmesini engelle
+        })
+        .catch(error => console.error('Hata:', error));
+    }
+  </script>
+</body> 
+</html>
+

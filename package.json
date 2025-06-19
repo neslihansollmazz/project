@@ -3,15 +3,24 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "node index.js"
+    "dev": "node index.js",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "keywords": [],
-  "description": "",
+  "description": "��#\u0000 \u00001\u0001h\u00001\u0001j\u0000h\u00001\u0001h\u00001\u0001h\u0000\r\u0000 \u0000",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "mysql": "^2.18.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neslihansollmazz/project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/neslihansollmazz/project/issues"
+  },
+  "homepage": "https://github.com/neslihansollmazz/project#readme"
 }

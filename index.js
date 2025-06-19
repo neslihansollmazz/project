@@ -1,31 +1,22 @@
-const express = require("express");
-const mysql = require("mysql");
-const cors = require("cors");
-const path = require("path");
+// // index.js
+// const express = require('express');
+// const mysql = require('mysql');
+// const cors = require('cors');
 
-const app = express();
-app.use(cors());
-app.use(express.json());
+// // const app = express();
+// // app.use(cors()); // CORS izinleri
+// app.use(express.json()); // JSON verisini parse etmek için
 
-// HTML dosyasını sun
-app.use(express.static(__dirname));
+// // MySQL bağlantı ayarları
+// const connection = mysql.createConnection({
+//   host: '10.33.22.208',
+//   user: 'root',
+//   password: 'Bel33.Mez33', // şifreniz varsa buraya yazın
+//   database: 'talep' // 
+// });
 
-// MySQL bağlantısı
-const db = mysql.createConnection({
-    host: "10.33.22.208",
-    user: "root",
-    password: "Bel33.Mez33",
-    database: "harcama_takip"
-});
-
-// Personel verisi
-app.get("/personel", (req, res) => {
-    db.query("SELECT * FROM personel", (err, result) => {
-        if (err) return res.json({ Error: err });
-        return res.json(result);
-    });
-});
-
-app.listen(8080, () => {
-    console.log("API 8080 portunda çalışıyor");
-});
+// // Bağlantıyı başlat
+// connection.connect((err) => {
+//   if (err) throw err;
+//   console.log('MySQL bağlantısı başarılı.');
+// });
