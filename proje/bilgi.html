@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Şikayet / Talep Formu</title>
+</head>
+<body>
+  <h2>Şikayet / Talep Ekle</h2>
+
+  <form action="/sikayet" method="POST">
+    
+    <label for="aciklama">Açıklama:</label><br>
+    <textarea id="aciklama" name="aciklama" rows="4" cols="50" required></textarea><br><br>
+
+   
+    <label for="adres">Adres:</label><br>
+    <input type="text" id="adres" name="adres" required><br><br>
+
+    
+    <label>Tür:</label><br>
+    <input type="radio" id="sikayet" name="tur" value="sikayet" required>
+    <label for="sikayet">Şikayet</label><br>
+
+    <input type="radio" id="talep" name="tur" value="talep">
+    <label for="talep">Talep</label><br><br>
+
+    <button type="submit">Gönder</button>
+  </form>
+</body>
+</html>

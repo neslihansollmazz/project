@@ -9,6 +9,7 @@ const port = 3000;
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'proje')));
 
 
@@ -84,8 +85,50 @@ app.post('/login', (req, res) => {
     }
   });
 });
+app.post('/sikayet', (req, res) => {
+  const { aciklama, adres, tur } = req.body;
 
-// Sunucu başlatma
+  if (!aciklama || !adres || !tur) {
+    return res.status(400).json({ mesaj: "Açıklama, adres ve tür zorunludur." });
+  }
+
+  const query = "INSERT INTO sikayet (aciklama, adres, tur) VALUES (?, ?, ?)";
+  connection.query(query, [aciklama, adres, tur], (err, result) => {
+    if (err) {
+      console.error("Sikayet kayıt hatası:", err);
+      return res.status(500).json({ mesaj: "Kayıt sırasında hata oluştu." });
+    }
+
+    res.json({ mesaj: "Şikayet/Talep başarıyla kaydedildi.", id: result.insertId });
+  });
+})
+// Şikayetleri tarihe göre getir (admin paneli için)
+app.get('/admin/sikayetler', (req, res) => {
+  const query = 'SELECT * FROM sikayet ORDER BY created_time DESC';
+  connection.query(query, (err, results) => {
+    if (err) return res.status(500).json({ mesaj: 'Veritabanı hatası' });
+    res.json(results);
+  });
+});
+
+// Şikayeti tamamlanmış olarak işaretle (finish_time güncelle)
+app.put('/admin/sikayetler/:id/bitir', (req, res) => {
+  const { id } = req.params;
+  const query = `UPDATE sikayet SET finish_time = NOW() WHERE id = ?`;
+
+  connection.query(query, [id], (err, result) => {
+    if (err) {
+      console.error('Güncelleme hatası:', err);
+      return res.status(500).json({ mesaj: 'Şikayet güncellenirken hata oluştu.' });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ mesaj: 'Şikayet bulunamadı.' });
+    }
+    res.json({ mesaj: 'Şikayet başarıyla tamamlandı.' });
+  });
+});
+
+
 app.listen(port, () => {
   console.log(`Sunucu http://localhost:${port} üzerinde çalışıyor`);
 });
