@@ -56,7 +56,17 @@
       const tbody = document.querySelector('#sikayetTablosu tbody');
       tbody.innerHTML = '';
 
-      data.forEach(s => {
+            // Filtre değerini al
+      const filter = filterSelect.value;
+
+      // Filtreye göre veriyi süz
+      const filteredData = data.filter(s => {
+        if (filter === 'pending') return !s.finish_time;
+        if (filter === 'completed') return !!s.finish_time;
+        return true; // all
+      });
+
+      filteredData.forEach(s => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>${s.id}</td>
@@ -72,6 +82,42 @@
         tbody.appendChild(tr);
       });
     }
+
+    async function tamamla(id) {
+      const onay = confirm("Bu şikayeti tamamlamak istiyor musunuz?");
+      if (!onay) return;
+
+      const res = await fetch(`http://localhost:3000/admin/sikayetler/${id}/bitir`, {
+        method: 'PUT'
+      });
+
+      const sonuc = await res.json();
+      alert(sonuc.mesaj);
+      sikayetleriGetir(); // tabloyu yenile
+    }
+
+    // Filtre değiştiğinde listeyi yenile
+    filterSelect.addEventListener('change', sikayetleriGetir);
+
+    // Sayfa yüklendiğinde verileri getir
+    sikayetleriGetir();
+
+      data.forEach(s => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${s.id}</td>
+          <td>${s.aciklama}</td>
+          <td>${s.adres}</td>
+          <td>${s.tur}</td>
+          <td>${s.created_time ? new Date(s.created_time).toLocaleString() : '-'}</td>
+          <td>${s.finish_time ? new Date(s.finish_time).toLocaleString() : '-'}</td>
+          <td>
+            ${!s.finish_time ? `<button onclick="tamamla(${s.id})">Tamamla</button>` : `<button disabled>Tamamlandı</button>`}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    
 
     async function tamamla(id) {
       const onay = confirm("Bu şikayeti tamamlamak istiyor musunuz?");

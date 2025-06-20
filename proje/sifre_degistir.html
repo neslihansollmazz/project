@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Şifre Değiştir</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #3f51b5, #5a55ae);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .change-password-container {
+      background-color: #fff;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #3f51b5;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+      border: 2px solid black;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    input[type="password"]:focus {
+      outline: none;
+      border: 2px solid black;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #3f51b5;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      background-color: #303f9f;
+    }
+
+    .link {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .link a {
+      color: gray;
+      text-decoration: none;
+    }
+
+    .link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="change-password-container">
+    <h2>Şifre Değiştir</h2>
+    <form action="/sifre_degistir" method="POST">
+      <input type="text" name="kullanici_adi" placeholder="Kullanıcı Adı" required>
+      <input type="password" name="eski_sifre" placeholder="Mevcut Şifre" required>
+      <input type="password" name="yeni_sifre" placeholder="Yeni Şifre" required>
+      <input type="password" name="yeni_sifre_tekrar" placeholder="Yeni Şifre (Tekrar)" required>
+      <button type="submit">Şifreyi Güncelle</button>
+    </form>
+    <div class="link">
+      <a href="giris.html">Giriş sayfasına dön</a>
+    </div>
+  </div>
+</body>
+</html>
